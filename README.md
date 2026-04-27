@@ -6,6 +6,7 @@ in the book "Learn Rust Programming Today".
 ## Chapter key
 
 | Chapter | Directory |
+| ------- | --------- |
 | 3 | ch-compiler |
 | 5 | ch-cargo |
 | 6 | ch-strings-numbers |
