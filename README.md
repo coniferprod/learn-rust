@@ -17,4 +17,6 @@ in the book "Learn Rust Programming Today".
 | 11 | ch-structs |
 | 12 | ch-enum-match |
 | 13 | ch-option |
-
+| 14 | ch-ref |
+| 15 | ch-vectors |
+| 16 | ch-args |
