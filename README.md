@@ -20,3 +20,6 @@ in the book "Learn Rust Programming Today".
 | 14 | ch-ref |
 | 15 | ch-vectors |
 | 16 | ch-args |
+| 17 | ch-errors |
+| 18 | ch-traits |
+| 19 | ch-crates |
