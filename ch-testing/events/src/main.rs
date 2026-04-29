@@ -2,7 +2,9 @@ use std::env;
 use std::fmt;
 use std::str::FromStr;
 
-#[derive(Debug, PartialEq, Copy, Clone)]
+use rand::RngExt;
+
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 enum Month {
     January,
     February,
@@ -38,7 +40,7 @@ impl Month {
     }
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 struct Date {
     year: i16,
     month: Month,
@@ -46,8 +48,33 @@ struct Date {
 }
 
 impl Date {
-    fn new(year: i16, month: Month, day: u8) -> Self {
-        Self { year, month, day }
+    fn new(year: i16, month: Month, day: u8) -> Option<Self> {
+        let valid_day = 1..=Self::day_count(month, year);
+        if !valid_day.contains(&day) {
+            return None
+        }        
+        Some(Self { year, month, day })
+    }
+
+    fn day_count(month: Month, year: i16) -> u8 {
+        match month {
+            Month::April | Month::June | Month::September | Month::November => 30,
+            Month::February => if Self::is_leap_year(year) { 29 } else { 28 },
+            _ => 31
+        }
+    }
+
+    fn is_leap_year(year: i16) -> bool {
+        (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
+    }
+
+    fn random() -> Option<Date> {
+        let mut rng = rand::rng();
+        Date::new(
+            rng.random_range(1900..2099),
+            Month::from_i32(rng.random_range(1..=12)),
+            rng.random_range(1..=31),
+        )
     }
 }
 
@@ -73,7 +100,7 @@ impl MonthDay {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 struct Category {
     primary: String,
     secondary: Option<String>,
@@ -165,17 +192,17 @@ fn main() {
 
     let events = vec![
         Event::new(
-            Date::new(2025, Month::December, 11),
+            Date::new(2025, Month::December, 11).unwrap(),
             String::from("Rust 1.92.0 released"),
             Category::new("programming", "rust"),
         ),
         Event::new(
-            Date::new(1996, Month::January, 23),
+            Date::new(1996, Month::January, 23).unwrap(),
             String::from("JDK 1.0 released"),
             Category::new("programming", "java"),
         ),
         Event::new(
-            Date::new(2008, Month::December, 3),
+            Date::new(2008, Month::December, 3).unwrap(),
             String::from("Python 3.0 released"),
             Category::new("programming", "python"),
         ),
@@ -196,11 +223,84 @@ fn main() {
     if !any_luck {
         println!("No events for {:#?}", month_day);
     }
+    
+    let mut random_dates = Vec::<Date>::new();
+    let mut total_count = 0;
+    let mut valid_count = 0;
+    const MAX_COUNT: i32 = 100_000;
+    while valid_count < MAX_COUNT {
+        total_count += 1;
+        if let Some(candidate) = Date::random() {
+            random_dates.push(candidate);
+            valid_count += 1;
+        }
+    }
+    println!("Generated {} random date candidates to get {} valid dates", 
+        total_count, random_dates.len());
+}
 
-    let cat = Category::from_str("programming/rust").unwrap();
-    assert_eq!(format!("{}", cat), "programming/rust");
+#[cfg(test)]
+mod tests {
+    // Date tests:
 
-    // Implementing the Display trait gets you an implementation of
-    // the ToString trait for free:
-    assert_eq!(cat.to_string(), "programming/rust");
+    use crate::{Date, Month};
+
+    #[test]
+    fn rejects_invalid_date() {
+        assert_eq!(Date::new(2026, Month::February, 30), None);
+    }
+
+    #[test]
+    fn accepts_valid_date() {
+        assert_eq!(
+            Date::new(2026, Month::January, 26),
+            Some(Date {
+                year: 2026,
+                month: Month::January,
+                day: 26
+            })
+        )
+    }
+
+    #[test]
+    fn is_leap_year() {
+        assert_eq!(Date::is_leap_year(2024), true);
+    }
+
+    #[test]
+    fn is_not_leap_year() {
+        assert_eq!(Date::is_leap_year(2026), false);
+    }
+
+    // Category tests:
+
+    use std::str::FromStr;
+    use crate::Category;
+
+    #[test]
+    fn category_rejects_empty_string() {
+        assert!(Category::from_str("").is_err());
+    }
+
+    #[test]
+    fn category_accepts_primary_only_string() {
+        assert_eq!(
+            Category::from_str("programming"),
+            Ok(Category { 
+                primary: "programming".to_string(), 
+                secondary: None
+            })
+        )
+    }
+
+    #[test]
+    fn category_accepts_full_string() {
+        assert_eq!(
+            Category::from_str("programming/rust"),
+            Ok(Category { 
+                primary: "programming".to_string(), 
+                secondary: Some("rust".to_string())
+            })
+        )
+    }    
 }
