@@ -63,13 +63,32 @@ struct MonthDay {
     day: u8,
 }
 
-impl MonthDay {
-    fn from_str(s: &str) -> Self {
-        assert!(s.len() == 4);
+impl FromStr for MonthDay {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if s.len() != 4 {
+            return Err(String::from("invalid length for string"));
+        }
+
         let month_string = &s[..2];
-        let month = Month::from_i32(month_string.parse().unwrap());
-        let day: u8 = s[2..].parse().unwrap();
-        MonthDay { month, day }
+        let month: Month;
+        match month_string.parse() {
+            Ok(m) => month = Month::from_i32(m),
+            Err(_) => {
+                return Err(String::from("invalid month"));
+            }
+        };
+
+        let day: u8;
+        match s[2..].parse() {
+            Ok(d) => day = d,
+            Err(_) => {
+                return Err(String::from("invalid day"));
+            }
+        };
+
+        Ok(MonthDay { month, day })
     }
 }
 
@@ -160,7 +179,19 @@ impl fmt::Display for Event {
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let month_day = MonthDay::from_str(&args[1]); // note: 1, not 0
+    if args.len() < 2 {
+        eprintln!("usage: events mmdd");
+        return;
+    }
+
+    let md_arg = &args[1];  // note: 1, not 0
+    let month_day = match MonthDay::from_str(md_arg) {
+        Ok(m) => m,
+        Err(_) => {
+            eprintln!("Bad month-day: {}", md_arg);
+            return;
+        }
+    }; 
     //println!("{:#?}", month_day);
 
     let events = vec![
