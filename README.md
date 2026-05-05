@@ -5,6 +5,11 @@ in the book "Learn Rust Programming Today".
 
 ## Chapter key
 
+The following table lets you easily look up the directories in this repository
+containing the examples in the book, by the chapter number. 
+NOTE: The chapter numbers may change before the
+book is published, but this table will be kept up to date.
+
 | Chapter | Directory |
 | ------- | --------- |
 | 3 | ch-compiler |
@@ -23,3 +28,4 @@ in the book "Learn Rust Programming Today".
 | 17 | ch-errors |
 | 18 | ch-traits |
 | 19 | ch-crates |
+| 20 | ch-testing |
