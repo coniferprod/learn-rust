@@ -29,3 +29,8 @@ book is published, but this table will be kept up to date.
 | 18 | ch-traits |
 | 19 | ch-crates |
 | 20 | ch-testing |
+| 22 | ch-birthday |
+| 23 | ch-today |
+| 24 | ch-modules |
+| 25 | ch-providers |
+
