@@ -1,0 +1,12 @@
+[package]
+name = "today"
+version = "0.30.0"
+edition = "2024"
+
+[dependencies]
+chrono = "0.4.44"
+csv = "1.4.0"
+dirs = "6.0.0"
+toml = "1.1.2"
+serde = { version = "1.0.228", features = ["derive"] }
+rusqlite = { version = "0.39.0", features = ["bundled"] }
