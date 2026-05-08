@@ -1,23 +1,24 @@
 use std::str::FromStr;
 
-use reqwest::{blocking::Client, blocking::Response};
+use reqwest::blocking::{Client, Response};
 use serde::Deserialize;
 use serde_json;
 use chrono::{NaiveDate, Datelike, Local};
+use url::Url;
 
 use crate::events::{Category, Event, MonthDay};
 use crate::providers::EventProvider;
 
 pub struct WebProvider {
     name: String,
-    url: String,
+    url: Url,
 }
 
 impl WebProvider {
-    pub fn new(name: &str, url: &str) -> Self {
+    pub fn new(name: &str, url: &Url) -> Self {
         Self { 
             name: name.to_string(),
-            url: url.to_string()
+            url: url.clone()
         }
     }
 }
@@ -31,10 +32,11 @@ impl EventProvider for WebProvider {
         let today: NaiveDate = Local::now().date_naive();
         let month_day = MonthDay::new(today.month(), today.day());
 
-        let date_parameter = format!("date={}", month_day);
-        let url = format!("{}?{}", &self.url, date_parameter);
+        let mut url = self.url.clone();
+        url.set_query(Some(&format!("date={}", month_day)));
+
         let client = Client::new();
-        let request = client.get(&url).send();
+        let request = client.get(url).send();
         let response: Response;
         if request.is_err() {
             eprintln!("Error while retrieving data: {:#?}", request.err());

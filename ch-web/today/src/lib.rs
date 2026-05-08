@@ -88,9 +88,17 @@ fn create_providers(config: &Config, config_path: &Path) -> Vec::<Box<dyn EventP
                 providers.push(Box::new(provider));
             },
             "web" => {
-                let provider = WebProvider::new(&cfg.name, &cfg.resource);
-                providers.push(Box::new(provider));
-            },            
+                match Url::parse(&cfg.resource) {
+                    Ok(url) => {
+                        let provider = WebProvider::new(&cfg.name, &url);
+                        self.providers.push(Box::new(provider));
+                    },
+                    Err(e) => {
+                        eprintln!("Error in URL for provider '{}': {}",
+                            &cfg.name, e);
+                    }
+                }
+            },
             _ => {
                 eprintln!("Unknown provider kind in {:?}", cfg);
             }
