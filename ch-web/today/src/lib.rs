@@ -4,6 +4,7 @@ use std::fs;
 
 use chrono::{Datelike, Local, NaiveDate};
 use serde::Deserialize;
+use url::Url;
 
 use crate::events::{Category, Event, MonthDay};
 use crate::providers::{
@@ -91,7 +92,7 @@ fn create_providers(config: &Config, config_path: &Path) -> Vec::<Box<dyn EventP
                 match Url::parse(&cfg.resource) {
                     Ok(url) => {
                         let provider = WebProvider::new(&cfg.name, &url);
-                        self.providers.push(Box::new(provider));
+                        providers.push(Box::new(provider));
                     },
                     Err(e) => {
                         eprintln!("Error in URL for provider '{}': {}",
