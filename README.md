@@ -33,4 +33,12 @@ book is published, but this table will be kept up to date.
 | 23 | ch-today |
 | 24 | ch-modules |
 | 25 | ch-providers |
-
+| 26 | ch-textfile |
+| 27 | ch-csvfile |
+| 28 | ch-dirs |
+| 29 | ch-config |
+| 30 | ch-sqlite |
+| 31 | ch-web |
+| 32 | ch-filters |
+| 33 | ch-cli | 
+| 34 | ch-event-kinds |
