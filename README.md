@@ -44,3 +44,4 @@ book is published, but this table will be kept up to date.
 | 34 | ch-event-kinds |
 | 35 | ch-logging |
 | 36 | ch-add-events |
+| 37 | ch-sorting |
