@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<events>
+  <event>
+    <date>1998-02-10</date>
+    <description>XML 1.0 becomes a W3C Recommendation</description>
+    <category>
+      <primary>computing</primary>
+      <secondary>xml</secondary>
+    </category>
+  </event>
+
+  <event>
+    <date>2026-05-05</date>
+    <description>Testing the XML event provider</description>
+    <category>
+      <primary>test</primary>
+    </category>
+  </event>
+
+  <event>
+    <date>2008-11-26</date>
+    <description>XML 1.0 Fifth Edition published</description>
+    <category>
+      <primary>computing</primary>
+      <secondary>xml</secondary>
+    </category>
+  </event>
+
+  <event>
+    <date>2004-02-04</date>
+    <description>XML 1.1 published</description>
+    <category>
+      <primary>computing</primary>
+      <secondary>xml</secondary>
+    </category>
+  </event>
+
+  <event>
+    <date>2006-08-16</date>
+    <description>XML 1.1 Second Edition published</description>
+    <category>
+      <primary>computing</primary>
+      <secondary>xml</secondary>
+    </category>
+  </event>
+
+</events>

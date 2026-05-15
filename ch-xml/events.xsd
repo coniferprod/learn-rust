@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="events">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="event" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="fullDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="monthDayType">
+        <xs:restriction base="xs:gMonthDay"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="dateRuleType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(first|second|third|fourth|fifth|last)\s+(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+(in|of)\s+(January|February|March|April|May|June|July|August|September|October|November|December)"/>
+        </xs:restriction>
+    </xs:simpleType>    
+
+    <xs:simpleType name="eventDateType">
+        <xs:union memberTypes="fullDateType monthDayType dateRuleType"/>
+    </xs:simpleType>
+
+    <xs:element name="event">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="date" type="eventDateType"/>
+                <xs:element name="description" type="xs:string"/>
+                <xs:element ref="category"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="category">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="primary" type="xs:string"/>
+                <xs:element name="secondary" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
