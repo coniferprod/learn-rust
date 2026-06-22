@@ -1,7 +1,7 @@
 # Learn Rust Programming Today
 
 This is the source code repository for the example programs
-in the book "Learn Rust Programming Today".
+in the book [Learn Rust Programming Today](https://www.coniferproductions.com/books/learn-rust/).
 
 ## Chapter key
 
@@ -45,3 +45,7 @@ book is published, but this table will be kept up to date.
 | 35 | ch-logging |
 | 36 | ch-add-events |
 | 37 | ch-sorting |
+| 38 | ch-today1 |
+| 39 | ch-refactoring |
+| 40 | ch-xml |
+| 41 | ch-final |
