@@ -3,12 +3,24 @@
 This is the source code repository for the example programs
 in the book [Learn Rust Programming Today](https://www.coniferproductions.com/books/learn-rust/).
 
+## Chapter notes
+
+### Chapter 31: Reading events from a web service
+
+The web server for events is live on Heroku at [https://todayserver-89bb2a1b2e80.herokuapp.com/api/v1/events](https://todayserver-89bb2a1b2e80.herokuapp.com/api/v1/events). You need to supply the
+`date` query parameter as `date=06-16` (MM-DD format).
+
+Note that it mostly contains fake test events generated with ChatGPT. They all have the
+category `test/fake`, so you can either turn the web event provider off with `is_active = false`
+in the configuration file (see Chapter 41), implement category exclusion (see Chapter 42),
+or just use `grep` to filter them:
+
+    today | grep -v "test/fake"
+
 ## Chapter key
 
 The following table lets you easily look up the directories in this repository
-containing the examples in the book, by the chapter number. 
-NOTE: The chapter numbers may change before the
-book is published, but this table will be kept up to date.
+containing the examples in the book, by the chapter number.
 
 | Chapter | Directory |
 | ------- | --------- |
